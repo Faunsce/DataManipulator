@@ -1,9 +1,12 @@
 ﻿#include <iostream>
 #include <thread>
 #include <chrono>
+#include <string>
+#include <ctype.h>
 
 void programWait(short int x) { std::this_thread::sleep_for(std::chrono::milliseconds(x)); };
 void clearScreen() { std::cout << "\x1b[2J\x1b[H"; };
+int obtainUserSelection();
 
 int main()
 {
@@ -13,9 +16,9 @@ int main()
 
 	clearScreen();
 
-	// Obtain user input for creation of data set
+	int dataSetSize = obtainUserSelection();
 
-	// Create Data set
+	std::vector<int> dataSet(0, dataSetSize);
 
 	std::cout << "What would like like to do to the data today?" << std::endl;
 
@@ -37,6 +40,7 @@ int main()
 
 
 
+
 /*
 Data maniuplator is a program in which at runtime, a user creates a data set of a user defined size.
 
@@ -50,3 +54,32 @@ A logging monad could be useful in tracking the state of the dataset throughout 
 
 This log may or may not be saved at the end of runtime to a file.
 */
+
+int obtainUserSelection()
+{
+	std::string userInput;
+	bool validInput;
+	while (true) {
+		validInput = true;
+		std::getline(std::cin, userInput);
+
+		for (const auto& element : userInput)
+		{
+			if (!std::isdigit(element))
+				validInput = false;
+		}
+
+		int userNum = 0;
+
+		if (validInput)
+			userNum = std::stoi(userInput);
+
+		if (userNum < 10 || userNum > 100)
+			validInput = false;
+
+		if (validInput)
+			return userNum;
+		else
+			std::cout << "Invalid input, please try again." << std::endl;
+	};
+}
