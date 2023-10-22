@@ -2,16 +2,16 @@
 #include <thread>
 #include <chrono>
 
-#define CLEAR_SCREEN() std::cout << "\x1b[2J\x1b[H"
-#define PROGRAM_WAIT(x) std::this_thread::sleep_for(std::chrono::milliseconds(x))
+void programWait(short int x) { std::this_thread::sleep_for(std::chrono::milliseconds(x)); };
+void clearScreen() { std::cout << "\x1b[2J\x1b[H"; };
 
 int main()
 {
 	std::cout << "Welcome to the Data manipulator!" << std::endl;
 
-	PROGRAM_WAIT(500);
+	programWait(500);
 
-	CLEAR_SCREEN();
+	clearScreen();
 
 	// Obtain user input for creation of data set
 
