@@ -6,7 +6,11 @@
 
 void programWait(short int x) { std::this_thread::sleep_for(std::chrono::milliseconds(x)); };
 void clearScreen() { std::cout << "\x1b[2J\x1b[H"; };
-int obtainUserSelection();
+int obtainUserSelection(int valMin, int valMax);
+
+void shuffleDataSet(std::vector<int>& dataSet) {};
+void sortDataSet(std::vector<int>& dataSet) {};
+void searchDataSet(std::vector<int>& dataSet) {};
 
 int main()
 {
@@ -18,15 +22,40 @@ int main()
 
 	std::cout << "Please enter a value between 10 and 100 (inclusive) : ";
 
-	int dataSetSize = obtainUserSelection();
+	int dataSetSize = obtainUserSelection(10, 100);
 
-	std::vector<int> dataSet(0, dataSetSize);
+	std::vector<int> dataSet(1, dataSetSize);
 
-	std::cout << "What would like like to do to the data today?" << std::endl;
+	std::cout << "What would like like to do to the data today?" << std::endl
+		<< "1 : Shuffle Dataset" << std::endl
+		<< "2 : Sort Dataset" << std::endl
+		<< "3 : Search Dataset" << std::endl
+		<< "4 : Generate New Dataset" << std::endl
+		<< "5 : End program" << std::endl;
 
-	// Obtain user input on choice of option
+	int userSelection = obtainUserSelection(1, 5);
 
-	// perform option, options are modify set, shuffle, sort, search, and end program.
+	switch (userSelection)
+	{
+	case 1:
+		shuffleDataSet(dataSet);
+		break;
+	case 2:
+		sortDataSet(dataSet);
+		break;
+	case 3:
+		searchDataSet(dataSet);
+		break;
+	case 4:
+		dataSetSize = obtainUserSelection(10, 100);
+		dataSet = std::vector<int>(1, dataSetSize);
+		break;
+	case 5:
+		break;
+	default:
+		throw std::invalid_argument("value 'userSelection' must be between 1 and 5");
+		break;
+	}
 
 	// log and/or print state of dataset
 
@@ -53,7 +82,7 @@ A logging monad could be useful in tracking the state of the dataset throughout 
 This log may or may not be saved at the end of runtime to a file.
 */
 
-int obtainUserSelection()
+int obtainUserSelection(int valMin, int valMax)
 {
 	std::string userInput;
 	bool validInput;
@@ -72,7 +101,7 @@ int obtainUserSelection()
 		if (validInput)
 			userNum = std::stoi(userInput);
 
-		if (userNum < 10 || userNum > 100)
+		if (userNum < valMin || userNum > valMax)
 			validInput = false;
 
 		if (validInput)
