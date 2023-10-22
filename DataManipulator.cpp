@@ -16,6 +16,8 @@ int main()
 
 	clearScreen();
 
+	std::cout << "Please enter a value between 10 and 100 (inclusive) : ";
+
 	int dataSetSize = obtainUserSelection();
 
 	std::vector<int> dataSet(0, dataSetSize);
@@ -36,10 +38,6 @@ int main()
 
 	std::cin.ignore(1);
 }
-
-
-
-
 
 /*
 Data maniuplator is a program in which at runtime, a user creates a data set of a user defined size.
@@ -80,6 +78,6 @@ int obtainUserSelection()
 		if (validInput)
 			return userNum;
 		else
-			std::cout << "Invalid input, please try again." << std::endl;
+			std::cout << std::endl << "Invalid input, please try again. : ";
 	};
 }
