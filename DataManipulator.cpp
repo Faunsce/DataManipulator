@@ -5,13 +5,22 @@
 #include <ctype.h>
 #include <algorithm>
 #include <random>
+#include <numeric>
 
 void programWait(short int x) { std::this_thread::sleep_for(std::chrono::milliseconds(x)); };
 void clearScreen() { std::cout << "\x1b[2J\x1b[H"; };
+
 int obtainUserSelection(int valMin, int valMax);
 
-void sortDataSet(std::vector<int>& dataSet) {};
+void sortDataSet(std::vector<int>& dataSet);
 void searchDataSet(std::vector<int>& dataSet) {};
+
+namespace Algorithms {
+	void bubbleSort(std::vector<int>& dataSet);
+	void insertionSort(std::vector<int>& dataSet);
+	void mergeSort(std::vector<int>& dataSet);
+	void quickSort(std::vector<int>& dataSet);
+}
 
 int main()
 {
@@ -28,7 +37,9 @@ int main()
 
 	int dataSetSize = obtainUserSelection(10, 100);
 
-	std::vector<int> dataSet(1, dataSetSize);
+	std::vector<int> dataSet(dataSetSize);
+	std::iota(dataSet.begin(), dataSet.end(), 1);
+	std::shuffle(dataSet.begin(), dataSet.end(), randomEngine);
 
 	clearScreen();
 	std::cout << "What would like like to do to the data today?" << std::endl
@@ -82,9 +93,9 @@ The datas size may be modified.
 
 The data set should also be able to be searched, sorted, and randomized.
 
-A logging monad could be useful in tracking the state of the dataset throughout the programs lifetime.
+A logging monad could be useful in tracking the state of the dataset throughout the programs lifetime. CANCELLED
 
-This log may or may not be saved at the end of runtime to a file.
+This log may or may not be saved at the end of runtime to a file. CANCELLED
 */
 
 int obtainUserSelection(int valMin, int valMax)
@@ -115,3 +126,74 @@ int obtainUserSelection(int valMin, int valMax)
 			std::cout << std::endl << "Invalid input, please try again. : ";
 	};
 }
+
+void sortDataSet(std::vector<int>& dataSet) 
+{
+	clearScreen();
+	std::cout << "Which sorting method should we use?" << std::endl
+		<< "1: Bubble Sort" << std::endl
+		<< "2: Insertion Sort" << std::endl
+		<< "3: Merge Sort" << std::endl
+		<< "4: Quick Sort" << std::endl;
+
+	int userSelection = obtainUserSelection(1, 4);
+
+	std::cout << "Your data beforehand." << std::endl
+		<< [dataSet]() {std::string data; for (const auto& element : dataSet) { data.append(std::to_string(element) + " "); } return data; }() << std::endl;
+
+	switch (userSelection)
+	{
+	case 1:
+		Algorithms::bubbleSort(dataSet);
+		break;
+	case 2:
+		Algorithms::insertionSort(dataSet);
+		break;
+	case 3:
+		Algorithms::mergeSort(dataSet);
+		break;
+	case 4:
+		Algorithms::quickSort(dataSet);
+		break;
+	default:
+		throw std::invalid_argument("value 'userSelection' must be between 1 and 4");
+	}
+
+	std::cout << "Your data afterwards." << std::endl
+		<< [dataSet]() {std::string data; for (const auto& element : dataSet) { data.append(std::to_string(element) + " "); } return data; }() << std::endl;
+
+	programWait(2000);
+};
+
+
+	namespace Algorithms {
+		void bubbleSort(std::vector<int>& dataSet) {
+			bool isClean = false;
+			for (int i = dataSet.size() - 1; i > 0; i--)
+			{
+				isClean = true;
+				for (int j = 0; j < i; j++)
+				{
+					if (dataSet[j] > dataSet[j + 1])
+					{
+						std::swap(dataSet[j], dataSet[j + 1]);
+						isClean = false;
+					}
+				}
+				if (isClean)
+					return;
+			}
+		}
+		
+		void insertionSort(std::vector<int>& dataSet) {
+
+		}
+		
+		void mergeSort(std::vector<int>& dataSet) {
+
+		}
+		
+		void quickSort(std::vector<int>& dataSet) {
+		
+		}
+	}
