@@ -73,11 +73,7 @@ int main()
 		break;
 	}
 
-	// log and/or print state of dataset
-
 	// Loop back through choice selection
-
-	// Prompt user to save their data
 
 	// Program End
 
@@ -92,10 +88,6 @@ This data set will not contain missing elements.
 The datas size may be modified.
 
 The data set should also be able to be searched, sorted, and randomized.
-
-A logging monad could be useful in tracking the state of the dataset throughout the programs lifetime. CANCELLED
-
-This log may or may not be saved at the end of runtime to a file. CANCELLED
 */
 
 int obtainUserSelection(int valMin, int valMax)
