@@ -22,6 +22,18 @@ namespace Algorithms {
 	void quickSort(std::vector<int>& dataSet);
 }
 
+std::ostream& operator<<(std::ostream& os, const std::vector<int>& intVec)
+{
+	for (int i = 0; i < intVec.size(); i++) {
+		os << intVec[i] << " ";
+		if ((i != 0) && ((i + 1) % 20 == 0))
+		{
+			os << std::endl;
+		}
+	}
+	return os;
+}
+
 int main()
 {
 	std::random_device randomDevice;
@@ -33,9 +45,9 @@ int main()
 
 	clearScreen();
 
-	std::cout << "Please enter a value between 10 and 100 (inclusive) : ";
+	std::cout << "Please enter a value between 10 and 500 (inclusive) : ";
 
-	int dataSetSize = obtainUserSelection(10, 100);
+	int dataSetSize = obtainUserSelection(10, 500);
 
 	std::vector<int> dataSet(dataSetSize);
 	std::iota(dataSet.begin(), dataSet.end(), 1);
@@ -63,7 +75,7 @@ int main()
 		searchDataSet(dataSet);
 		break;
 	case 4:
-		dataSetSize = obtainUserSelection(10, 100);
+		dataSetSize = obtainUserSelection(10, 500);
 		dataSet = std::vector<int>(1, dataSetSize);
 		break;
 	case 5:
@@ -131,7 +143,7 @@ void sortDataSet(std::vector<int>& dataSet)
 	int userSelection = obtainUserSelection(1, 4);
 
 	std::cout << "Your data beforehand." << std::endl
-		<< [dataSet]() {std::string data; for (const auto& element : dataSet) { data.append(std::to_string(element) + " "); } return data; }() << std::endl;
+		<< dataSet << std::endl;
 
 	switch (userSelection)
 	{
@@ -152,7 +164,7 @@ void sortDataSet(std::vector<int>& dataSet)
 	}
 
 	std::cout << "Your data afterwards." << std::endl
-		<< [dataSet]() {std::string data; for (const auto& element : dataSet) { data.append(std::to_string(element) + " "); } return data; }() << std::endl;
+		<< dataSet << std::endl;
 
 	programWait(2000);
 };
