@@ -3,17 +3,21 @@
 #include <chrono>
 #include <string>
 #include <ctype.h>
+#include <algorithm>
+#include <random>
 
 void programWait(short int x) { std::this_thread::sleep_for(std::chrono::milliseconds(x)); };
 void clearScreen() { std::cout << "\x1b[2J\x1b[H"; };
 int obtainUserSelection(int valMin, int valMax);
 
-void shuffleDataSet(std::vector<int>& dataSet) {};
 void sortDataSet(std::vector<int>& dataSet) {};
 void searchDataSet(std::vector<int>& dataSet) {};
 
 int main()
 {
+	std::random_device randomDevice;
+	std::mt19937_64 randomEngine(randomDevice());
+
 	std::cout << "Welcome to the Data manipulator!" << std::endl;
 
 	programWait(500);
@@ -26,6 +30,7 @@ int main()
 
 	std::vector<int> dataSet(1, dataSetSize);
 
+	clearScreen();
 	std::cout << "What would like like to do to the data today?" << std::endl
 		<< "1 : Shuffle Dataset" << std::endl
 		<< "2 : Sort Dataset" << std::endl
@@ -38,7 +43,7 @@ int main()
 	switch (userSelection)
 	{
 	case 1:
-		shuffleDataSet(dataSet);
+		std::shuffle(dataSet.begin(), dataSet.end(), randomEngine);
 		break;
 	case 2:
 		sortDataSet(dataSet);
