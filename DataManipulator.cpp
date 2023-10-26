@@ -186,7 +186,15 @@ void sortDataSet(std::vector<int>& dataSet)
 		}
 		
 		void insertionSort(std::vector<int>& dataSet) {
-
+			for (int i = 1; i < dataSet.size(); i++)
+			{
+				int j = i;
+				while (j > 0 && dataSet[j] < dataSet[j - 1])
+				{
+					std::swap(dataSet[j], dataSet[j - 1]);
+					j--;
+				}
+			}
 		}
 		
 		void mergeSort(std::vector<int>& dataSet) {
