@@ -202,7 +202,41 @@ void sortDataSet(std::vector<int>& dataSet)
 		}
 		
 		void mergeSort(std::vector<int>& dataSet) {
+			if (dataSet.size() > 2) {
+				std::vector<int> left(dataSet.begin(), dataSet.begin() + (dataSet.size() / 2));
+				mergeSort(left);
+				std::vector<int> right(dataSet.begin() + (dataSet.size() / 2), dataSet.end());
+				mergeSort(right);
+				
+				//std::cout << left << std::endl << right << std::endl;
 
+				//programWait(500);
+
+				for (const auto& element : right)
+				{
+					for (int i = 0; i < left.size(); i++)
+					{
+						if (left[i] > element)
+						{
+							left.insert(left.begin() + i, element);
+							break;
+						}
+						else if (i == left.size() - 1) 
+						{
+							left.emplace_back(element);
+							break;
+						}
+					}
+				}
+
+				dataSet = left;
+
+			} else {
+				if (dataSet.size() > 1 && (dataSet[0] > dataSet[1])) {
+					std::swap(dataSet[0], dataSet[1]);
+				}
+				return;
+			}
 		}
 		
 		void quickSort(std::vector<int>& dataSet) {
