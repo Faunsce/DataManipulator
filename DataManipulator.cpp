@@ -45,9 +45,9 @@ int main()
 
 	clearScreen();
 
-	std::cout << "Please enter a value between 10 and 500 (inclusive) : ";
+	std::cout << "Please enter a value between 10 and 10000 (inclusive) : ";
 
-	int dataSetSize = obtainUserSelection(10, 500);
+	int dataSetSize = obtainUserSelection(10, 100000);
 
 	std::vector<int> dataSet(dataSetSize);
 	std::iota(dataSet.begin(), dataSet.end(), 1);
@@ -63,13 +63,18 @@ int main()
 
 	int userSelection = obtainUserSelection(1, 5);
 
+	std::chrono::steady_clock::time_point start, end;
 	switch (userSelection)
 	{
 	case 1:
 		std::shuffle(dataSet.begin(), dataSet.end(), randomEngine);
 		break;
 	case 2:
+		start = std::chrono::steady_clock::now();
 		sortDataSet(dataSet);
+		end = std::chrono::steady_clock::now();
+		auto diff = end - start;
+		std::cout << std::chrono::duration<double, std::milli>(diff).count() << " ms" << std::endl;
 		break;
 	case 3:
 		searchDataSet(dataSet);
@@ -142,8 +147,7 @@ void sortDataSet(std::vector<int>& dataSet)
 
 	int userSelection = obtainUserSelection(1, 4);
 
-	std::cout << "Your data beforehand." << std::endl
-		<< dataSet << std::endl;
+	//std::cout << "Your data beforehand." << std::endl << dataSet << std::endl;
 
 	switch (userSelection)
 	{
@@ -163,8 +167,7 @@ void sortDataSet(std::vector<int>& dataSet)
 		throw std::invalid_argument("value 'userSelection' must be between 1 and 4");
 	}
 
-	std::cout << "Your data afterwards." << std::endl
-		<< dataSet << std::endl;
+	//std::cout << "Your data afterwards." << std::endl << dataSet << std::endl;
 
 	programWait(2000);
 };
