@@ -19,7 +19,6 @@ namespace Algorithms {
 	void bubbleSort(std::vector<int>& dataSet);
 	void insertionSort(std::vector<int>& dataSet);
 	void mergeSort(std::vector<int>& dataSet);
-	void quickSort(std::vector<int>& dataSet);
 }
 
 std::ostream& operator<<(std::ostream& os, const std::vector<int>& intVec)
@@ -142,10 +141,9 @@ void sortDataSet(std::vector<int>& dataSet)
 	std::cout << "Which sorting method should we use?" << std::endl
 		<< "1: Bubble Sort" << std::endl
 		<< "2: Insertion Sort" << std::endl
-		<< "3: Merge Sort" << std::endl
-		<< "4: Quick Sort" << std::endl;
+		<< "3: Merge Sort" << std::endl;
 
-	int userSelection = obtainUserSelection(1, 4);
+	int userSelection = obtainUserSelection(1, 3);
 
 	//std::cout << "Your data beforehand." << std::endl << dataSet << std::endl;
 
@@ -160,11 +158,8 @@ void sortDataSet(std::vector<int>& dataSet)
 	case 3:
 		Algorithms::mergeSort(dataSet);
 		break;
-	case 4:
-		Algorithms::quickSort(dataSet);
-		break;
 	default:
-		throw std::invalid_argument("value 'userSelection' must be between 1 and 4");
+		throw std::invalid_argument("value 'userSelection' must be between 1 and 3");
 	}
 
 	//std::cout << "Your data afterwards." << std::endl << dataSet << std::endl;
@@ -240,9 +235,5 @@ void sortDataSet(std::vector<int>& dataSet)
 				}
 				return;
 			}
-		}
-		
-		void quickSort(std::vector<int>& dataSet) {
-		
 		}
 	}
