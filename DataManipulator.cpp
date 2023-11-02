@@ -13,12 +13,15 @@ void clearScreen() { std::cout << "\x1b[2J\x1b[H"; };
 int obtainUserSelection(int valMin, int valMax);
 
 void sortDataSet(std::vector<int>& dataSet);
-void searchDataSet(std::vector<int>& dataSet) {};
+void searchDataSet(std::vector<int>& dataSet);
 
 namespace Algorithms {
 	void bubbleSort(std::vector<int>& dataSet);
 	void insertionSort(std::vector<int>& dataSet);
 	void mergeSort(std::vector<int>& dataSet);
+	
+	int linearSearch(std::vector<int>& dataSet, int valueToFind);
+	int binarySearch(std::vector<int>& dataSet, int valueToFind);
 }
 
 std::ostream& operator<<(std::ostream& os, const std::vector<int>& intVec)
@@ -165,7 +168,43 @@ void sortDataSet(std::vector<int>& dataSet)
 	//std::cout << "Your data afterwards." << std::endl << dataSet << std::endl;
 
 	programWait(2000);
-};
+}
+
+void searchDataSet(std::vector<int>& dataSet)
+{
+	clearScreen();
+	std::cout << "Which search method should we use?" << std::endl
+		<< "1: Linear Search" << std::endl
+		<< "2: Binary Search" << std::endl;
+	int userSelection = obtainUserSelection(1, 2);
+
+	std::cout << "What value are we looking for?" << std::endl
+		<< "Value to find :";
+	int secondaryUserSelection = obtainUserSelection(1, dataSet.size());
+
+
+	//std::cout << "Your data beforehand." << std::endl << dataSet << std::endl;
+
+	int posOfValue;
+
+	switch (userSelection)
+	{
+	case 1:
+		posOfValue = Algorithms::linearSearch(dataSet, secondaryUserSelection);
+		break;
+	case 2:
+		posOfValue = Algorithms::binarySearch(dataSet, secondaryUserSelection);
+		break;
+	default:
+		throw std::invalid_argument("value 'userSelection' must be between 1 and 2");
+	}
+
+	std::cout << "The index of the value was [" << std::to_string(posOfValue) << "]" << std::endl;
+	//std::cout << "Your data afterwards." << std::endl << dataSet << std::endl;
+
+	programWait(2000);
+}
+;
 
 
 	namespace Algorithms {
@@ -235,5 +274,20 @@ void sortDataSet(std::vector<int>& dataSet)
 				}
 				return;
 			}
+		}
+
+		int linearSearch(std::vector<int>& dataSet, int valueToFind) {
+
+			for (int i = 0; i < dataSet.size(); i++)
+			{
+				if (dataSet[i] == valueToFind)
+					return i;
+			}
+
+			return -1;
+		}
+
+		int binarySearch(std::vector<int>& dataSet, int valueToFind) {
+			return -1;
 		}
 	}
