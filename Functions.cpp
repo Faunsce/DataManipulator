@@ -70,7 +70,8 @@ int obtainUserSelection(int valMin, int valMax)
 		searchDataSet(dataSet);
 		break;
 	case 4:
-		dataSetSize = obtainUserSelection(10, 500);
+		std::cout << "Please enter a value between 10 and 10000 (inclusive) : ";
+		dataSetSize = obtainUserSelection(10, 10000);
 		dataSet = std::vector<int>(1, dataSetSize);
 		break;
 	case 5:
