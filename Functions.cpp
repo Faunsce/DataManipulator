@@ -81,6 +81,8 @@ int obtainUserSelection(int valMin, int valMax)
 		break;
 	}
 
+	programWait(2000);
+
 	return true;
 };
 
@@ -235,6 +237,7 @@ namespace Algorithms {
 	}
 
 	int binarySearch(std::vector<int>& dataSet, int valueToFind) {
+		// TODO: Implement Binary Search
 		return -1;
 	}
 }
