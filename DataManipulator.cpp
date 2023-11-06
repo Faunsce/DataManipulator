@@ -12,6 +12,7 @@ void clearScreen() { std::cout << "\x1b[2J\x1b[H"; };
 
 int obtainUserSelection(int valMin, int valMax);
 
+[[nodiscard]] bool operateOnDataset(std::vector<int>& dataSet, std::mt19937_64& randomEngine);
 void sortDataSet(std::vector<int>& dataSet);
 void searchDataSet(std::vector<int>& dataSet);
 
@@ -55,42 +56,7 @@ int main()
 	std::iota(dataSet.begin(), dataSet.end(), 1);
 	std::shuffle(dataSet.begin(), dataSet.end(), randomEngine);
 
-	clearScreen();
-	std::cout << "What would like like to do to the data today?" << std::endl
-		<< "1 : Shuffle Dataset" << std::endl
-		<< "2 : Sort Dataset" << std::endl
-		<< "3 : Search Dataset" << std::endl
-		<< "4 : Generate New Dataset" << std::endl
-		<< "5 : End program" << std::endl;
-
-	int userSelection = obtainUserSelection(1, 5);
-
-	std::chrono::steady_clock::time_point start, end;
-	switch (userSelection)
-	{
-	case 1:
-		std::shuffle(dataSet.begin(), dataSet.end(), randomEngine);
-		break;
-	case 2:
-		start = std::chrono::steady_clock::now();
-		sortDataSet(dataSet);
-		end = std::chrono::steady_clock::now();
-		auto diff = end - start;
-		std::cout << std::chrono::duration<double, std::milli>(diff).count() << " ms" << std::endl;
-		break;
-	case 3:
-		searchDataSet(dataSet);
-		break;
-	case 4:
-		dataSetSize = obtainUserSelection(10, 500);
-		dataSet = std::vector<int>(1, dataSetSize);
-		break;
-	case 5:
-		break;
-	default:
-		throw std::invalid_argument("value 'userSelection' must be between 1 and 5");
-		break;
-	}
+	operateOnDataset(dataSet, randomEngine);
 
 	// Loop back through choice selection
 
@@ -137,6 +103,48 @@ int obtainUserSelection(int valMin, int valMax)
 			std::cout << std::endl << "Invalid input, please try again. : ";
 	};
 }
+
+bool operateOnDataset(std::vector<int>& dataSet, std::mt19937_64& randomEngine)
+{
+	int dataSetSize = dataSet.size();
+
+	clearScreen();
+	std::cout << "What would like like to do to the data today?" << std::endl
+		<< "1 : Shuffle Dataset" << std::endl
+		<< "2 : Sort Dataset" << std::endl
+		<< "3 : Search Dataset" << std::endl
+		<< "4 : Generate New Dataset" << std::endl
+		<< "5 : End program" << std::endl;
+
+	int userSelection = obtainUserSelection(1, 5);
+
+	std::chrono::steady_clock::time_point start, end;
+	switch (userSelection)
+	{
+	case 1:
+		std::shuffle(dataSet.begin(), dataSet.end(), randomEngine);
+		break;
+	case 2:
+		start = std::chrono::steady_clock::now();
+		sortDataSet(dataSet);
+		end = std::chrono::steady_clock::now();
+		auto diff = end - start;
+		std::cout << std::chrono::duration<double, std::milli>(diff).count() << " ms" << std::endl;
+		break;
+	case 3:
+		searchDataSet(dataSet);
+		break;
+	case 4:
+		dataSetSize = obtainUserSelection(10, 500);
+		dataSet = std::vector<int>(1, dataSetSize);
+		break;
+	case 5:
+		break;
+	default:
+		throw std::invalid_argument("value 'userSelection' must be between 1 and 5");
+		break;
+	}
+};
 
 void sortDataSet(std::vector<int>& dataSet) 
 {
