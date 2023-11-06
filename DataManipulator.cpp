@@ -56,11 +56,10 @@ int main()
 	std::iota(dataSet.begin(), dataSet.end(), 1);
 	std::shuffle(dataSet.begin(), dataSet.end(), randomEngine);
 
-	operateOnDataset(dataSet, randomEngine);
-
-	// Loop back through choice selection
-
-	// Program End
+	bool goAgain = false;
+	do {
+		goAgain = operateOnDataset(dataSet, randomEngine);
+	} while (goAgain);
 
 	std::cin.ignore(1);
 }
